@@ -1,0 +1,26 @@
+{
+  "name": "roko",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --bun nodemon src/index.js"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/swagger": "^1.0.5",
+    "@prisma/client": "6.0.1",
+    "axios": "^1.7.2",
+    "bcryptjs": "^2.4.3",
+    "dayjs": "^1.10.6",
+    "dotenv": "^10.0.0",
+    "elysia": "latest",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.7"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "prisma": "6.0.1"
+  },
+  "module": "src/index.js"
+}
