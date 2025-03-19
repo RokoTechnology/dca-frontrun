@@ -3,7 +3,7 @@ async function fetchUtil(uri, body, method, headers = {}, cache) {
     headers['Content-Type'] = headers['Content-Type'] || 'application/json'
 
     const request = await fetch(uri, {
-      method: method || 'POST'),
+      method: method || 'POST',
       body: body ? JSON.stringify(body) : undefined,
       headers
     }, { cache })

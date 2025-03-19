@@ -12,8 +12,10 @@ import {
   createTransferCheckedInstruction,
   getMint
 } from '@solana/spl-token';
-import fetchUtil from '@lib/fetch.js'
+import fetchUtil from './fetch.js'
 import bs58 from 'bs58'
+import config from './config.js'
+
 
 export const FEE_WALLET = process.env.FEE_WALLET || '5sff31ZBNZuT7iAtown5Pf1yzpkGczLy6W5G5nuywFBT'
 export const FEE_BPS = 40
@@ -26,14 +28,8 @@ export const USDC_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
 export const USDC_DECIMALS = 6
 
 
-export function getWallet(secretPrivate) {
-  if (!secretPrivate || secretPrivate === 'NOT_SET') {
-    throw new Error('creating secret from bad input')
-  }
-  if (secretPrivate[0] !== '[') {
-    secretPrivate = '[' + secretPrivate + ']'
-  }
-  return Keypair.fromSecretKey(new Uint8Array(JSON.parse(secretPrivate)))
+export function getWallet() {
+  return Keypair.fromSecretKey(new Uint8Array(JSON.parse(config.secretKey)))
 }
 
 export function pub(address) {
@@ -528,7 +524,7 @@ export function safeDecimalStr(amount, decimals) {
 }
 
 export function safeDecimal(amount, decimals) {
-  return Number(bigintToDecimalStr(amount, decimals))
+  return Number(safeDecimalStr(amount, decimals))
 }
 
 const MEMO_PROGRAM_ID = 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr'

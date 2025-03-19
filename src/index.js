@@ -6,6 +6,9 @@ import config from './config.js'
 import keyEp from './key.js'
 import fetchUtil from './fetch.js'
 import endpointHandler from './ep.js'
+import webhookEp from './webhook.js'
+import dcaEp from './dca.js'
+import queryEp from './query.js'
 
 
 let prisma = null
@@ -14,9 +17,8 @@ async function getContext(isTest) {
     return testCtx(mockCtx())
   }
   if (!prisma) {
-    prisma = connectPrisma()
+    // prisma = connectPrisma()
   }
-  const ep = getEndpoints(config.env)
   return {
     isContext: true,
     fetch: fetchUtil
@@ -26,8 +28,8 @@ async function getContext(isTest) {
 const app = new Elysia()
 app.onError(({ code, error, request }) => {
   const path = new URL(request.url).pathname
-  err({ code, error, path })
-  return { error: error.toString() }
+  console.error(error)
+  return { ok: false }
 })
 app.use(swagger())
 app.get("/healthz", true)
@@ -40,6 +42,8 @@ app.derive(({ body, query, params, headers }) => {
 })
 
 app.post('/key', async (req) => endpointHandler(req, keyEp, getContext))
-// app.post('/refetch-symbols', async (req) => endpointHandler(req, refetchSymbols, getContext))
+app.post('/webhook', async (req) => endpointHandler(req, webhookEp, getContext))
+app.post('/dca', async (req) => endpointHandler(req, dcaEp, getContext))
+app.post('/query', async (req) => endpointHandler(req, queryEp, getContext))
 
-app.listen(config.port, () => log('Account REST listening on port', config.port))
+app.listen(config.port, () => console.log('Roko REST listening on port', config.port))

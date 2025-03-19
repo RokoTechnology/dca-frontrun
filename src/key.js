@@ -1,6 +1,4 @@
-import astroEndpoint from '@lib/astro.js'
 import { Keypair } from "@solana/web3.js";
-import { getConnection, checkForFinality } from "@lib/wallet.js"
 
 
 async function connectWallet({ body, prisma }) {

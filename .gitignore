@@ -1,1 +1,4 @@
+db.sqlite
+.env
 node_modules
+claugent/
